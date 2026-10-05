@@ -38,6 +38,10 @@ overlay.nifti(
   bg = "black",
   NA.x = FALSE,
   NA.y = FALSE,
+  xaxt = "n",
+  yaxt = "n",
+  xaxs = "r",
+  yaxs = "r",
   ...
 )
 
@@ -62,6 +66,10 @@ overlay(x, y, ...)
   bg = "black",
   NA.x = FALSE,
   NA.y = FALSE,
+  xaxt = "n",
+  yaxt = "n",
+  xaxs = "r",
+  yaxs = "r",
   ...
 )
 
@@ -84,6 +92,10 @@ overlay(x, y, ...)
   bg = "black",
   NA.x = FALSE,
   NA.y = FALSE,
+  xaxt = "n",
+  yaxt = "n",
+  xaxs = "r",
+  yaxs = "r",
   ...
 )
 
@@ -106,6 +118,10 @@ overlay(x, y, ...)
   bg = "black",
   NA.x = FALSE,
   NA.y = FALSE,
+  xaxt = "n",
+  yaxt = "n",
+  xaxs = "r",
+  yaxs = "r",
   ...
 )
 
@@ -128,6 +144,10 @@ overlay(x, y, ...)
   bg = "black",
   NA.x = FALSE,
   NA.y = FALSE,
+  xaxt = "n",
+  yaxt = "n",
+  xaxs = "r",
+  yaxs = "r",
   ...
 )
 
@@ -150,6 +170,10 @@ overlay(x, y, ...)
   bg = "black",
   NA.x = FALSE,
   NA.y = FALSE,
+  xaxt = "n",
+  yaxt = "n",
+  xaxs = "r",
+  yaxs = "r",
   ...
 )
 
@@ -203,6 +227,18 @@ matrix (left-to-right, top-to-bottom), or a single slice.}
 \item{NA.x}{Set any values of 0 in \code{x} to \code{NA}}
 
 \item{NA.y}{Set any values of 0 in \code{y} to \code{NA}}
+
+\item{xaxt}{A character which specifies the x axis type. `"n"` means none.
+See [graphics::par()]}
+
+\item{yaxt}{A character which specifies the y axis type. `"n"` means none.
+See [graphics::par()]}
+
+\item{xaxs}{The style of axis interval calculation to be used for the x-axis.
+See [graphics::par()]}
+
+\item{yaxs}{The style of axis interval calculation to be used for the y-axis.
+See [graphics::par()]}
 
 \item{\dots}{other arguments to the \code{image} function may be provided
 here.}

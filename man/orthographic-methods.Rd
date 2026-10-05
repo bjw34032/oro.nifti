@@ -31,6 +31,8 @@ orthographic.nifti(
   text = NULL,
   text.color = "white",
   text.cex = 2,
+  xaxt = "n",
+  yaxt = "n",
   ...
 )
 
@@ -56,6 +58,8 @@ orthographic(x, ...)
   text = NULL,
   text.color = "white",
   text.cex = 2,
+  xaxt = "n",
+  yaxt = "n",
   ...
 )
 
@@ -79,6 +83,8 @@ orthographic(x, ...)
   text = NULL,
   text.color = "white",
   text.cex = 2,
+  xaxt = "n",
+  yaxt = "n",
   ...
 )
 
@@ -129,6 +135,12 @@ pane.}
 \dQuote{white}.}
 
 \item{text.cex}{is the size of the user-specified text (default = 2).}
+
+\item{xaxt}{A character which specifies the x axis type. `"n"` means none.
+See [graphics::par()]}
+
+\item{yaxt}{A character which specifies the y axis type. `"n"` means none.
+See [graphics::par()]}
 
 \item{\dots}{other arguments to the \code{image} function may be provided
 here.}

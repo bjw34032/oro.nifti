@@ -50,7 +50,7 @@
 #' @seealso \code{\link{convert.datatype}}, \code{\link{convert.bitpix}},
 #' \code{\link{convert.intent}}, \code{\link{convert.form}},
 #' \code{\link{convert.units}}, \code{\link{convert.slice}}
-#' @references ANALYZE 7.5\cr\url{http://eeg.sourceforge.net/ANALYZE75.pdf}
+#' @references ANALYZE 7.5\cr\url{https://eeg.sourceforge.net/ANALYZE75.pdf}
 #' @export
 #' @rdname convert_anlz
 #' @examples

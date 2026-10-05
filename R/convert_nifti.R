@@ -335,7 +335,7 @@ as.nifti <- function(from, value=NULL, verbose=FALSE) {
     slot(value, "cal_min") <- ifelse(calset, from@"cal_max", from@"glmin")
     return(value)
     ## The below code should apply the orient code as per 
-    ## http://eeg.sourceforge.net/ANALYZE75.pdf and 
+    ## https://eeg.sourceforge.net/ANALYZE75.pdf and 
     ## http://eeg.sourceforge.net/AnalyzeDirect_ANALYZEformat.pdf
     ## However the NIfTI website says that this field is not often
     ##   set properly so I am unsure whether to apply this transform

@@ -24,6 +24,8 @@
   oma = rep(0, 4),
   mar = rep(0, 4),
   bg = "black",
+  xaxt = "n",
+  yaxt = "n",
   ...
 )
 
@@ -41,6 +43,8 @@
   oma = rep(0, 4),
   mar = rep(0, 4),
   bg = "black",
+  xaxt = "n",
+  yaxt = "n",
   ...
 )
 
@@ -76,6 +80,12 @@ range.}
 \item{mar}{is the number of lines of margin in the \code{par} function.}
 
 \item{bg}{is the background color in the \code{par} function.}
+
+\item{xaxt}{A character which specifies the x axis type. `"n"` means none.
+See [graphics::par()]}
+
+\item{yaxt}{A character which specifies the y axis type. `"n"` means none.
+See [graphics::par()]}
 
 \item{\dots}{other arguments to the \code{image} function may be provided
 here.}

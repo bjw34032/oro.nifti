@@ -540,7 +540,7 @@ nifti_header <- function(
 #' @author Brandon Whitcher \email{bwhitcher@@gmail.com},\cr Volker Schmid
 #' \email{volkerschmid@@users.sourceforge.net}
 #' @seealso \code{\link{readNIfTI}}
-#' @references ANALYZE 7.5\cr \url{http://eeg.sourceforge.net/ANALYZE75.pdf}
+#' @references ANALYZE 7.5\cr \url{https://eeg.sourceforge.net/ANALYZE75.pdf}
 #' @keywords file
 #' @examples
 #' 

@@ -13,7 +13,7 @@
 #' Brandon Whitcher \email{bwhitcher@@gmail.com}
 #' @references
 #' ANALYZE 7.5\cr
-#' \url{http://eeg.sourceforge.net/ANALYZE75.pdf}\cr
+#' \url{https://eeg.sourceforge.net/ANALYZE75.pdf}\cr
 #' NIfTI-1\cr
 #' \url{http://nifti.nimh.nih.gov/}
 #'

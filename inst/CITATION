@@ -1,8 +1,8 @@
 citHeader("To cite oro.nifti in publications use:")
 
-citEntry(entry = "Article",
+bibentry(bibtype = "Article",
   title        = "Working with the {DICOM} and {NIfTI} Data Standards in {R}",
-  author       = personList(as.person("Brandon Whitcher"),
+  author       = c(as.person("Brandon Whitcher"),
                    as.person("Volker J. Schmid"),
                    as.person("Andrew Thornton")),
   journal      = "Journal of Statistical Software",
@@ -11,6 +11,7 @@ citEntry(entry = "Article",
   number       = "6",
   pages        = "1--28",
   doi          = "10.18637/jss.v044.i06",
+  key          = "oro.nifti",
 
   textVersion  =
   paste("Brandon Whitcher, Volker J. Schmid, Andrew Thornton (2011).",

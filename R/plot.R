@@ -41,7 +41,10 @@ image.nifti <- function(x, z=1, w=1, col=gray(0:64/64),
                         plane=c("axial", "coronal", "sagittal"),
                         plot.type=c("multiple", "single"), zlim=NULL,
                         xlab="", ylab="", axes=FALSE, oma=rep(0,4),
-                        mar=rep(0,4), bg="black", ...) {
+                        mar=rep(0,4), bg="black", 
+                        xaxt = "n",
+                        yaxt = "n",
+                        ...) {
   switch(plane[1],
          "axial" = {
            aspect <- x@pixdim[3] / x@pixdim[2]
@@ -105,19 +108,28 @@ image.nifti <- function(x, z=1, w=1, col=gray(0:64/64),
   par(mfrow=ceiling(rep(sqrt(lz),2)), oma=oma, mar=mar, bg=bg)
   if (all(is.na(Z))) { # two-dimensional matrix
     graphics::image(1:X, 1:Y, x, col=col, breaks=breaks, asp=aspect,
-                    axes=axes, xlab=xlab, ylab=ylab, ...)
+                    axes=axes, xlab=xlab, ylab=ylab, 
+                    xaxt = xaxt,
+                    yaxt = yaxt,
+                    ...)
   } else {
     if (all(is.na(W))) { # three-dimensional array
       for (z in index) {
         graphics::image(1:X, 1:Y, x[,,z], col=col, breaks=breaks,
-                        asp=aspect, axes=axes, xlab=xlab, ylab=ylab, ...)
+                        asp=aspect, axes=axes, xlab=xlab, ylab=ylab, 
+                        xaxt = xaxt,
+                        yaxt = yaxt,
+                        ...)
       }
     } else { # four-dimensional array
       if (any(w < 1 | w > W))
         stop("volume \"w\" out of range")
       for (z in index) {
         graphics::image(1:X, 1:Y, x[,,z,w], col=col, breaks=breaks,
-                        asp=aspect, axes=axes, xlab=xlab, ylab=ylab, ...)
+                        asp=aspect, axes=axes, xlab=xlab, ylab=ylab, 
+                        xaxt = xaxt,
+                        yaxt = yaxt,
+                        ...)
       }
     }
   }
@@ -154,6 +166,10 @@ image.nifti <- function(x, z=1, w=1, col=gray(0:64/64),
 #' @param oma is the size of the outer margins in the \code{par} function.
 #' @param mar is the number of lines of margin in the \code{par} function.
 #' @param bg is the background color in the \code{par} function.
+#' @param xaxt A character which specifies the x axis type. `"n"` means none.
+#' See [graphics::par()]
+#' @param yaxt A character which specifies the y axis type. `"n"` means none.
+#' See [graphics::par()]
 #' @param \dots other arguments to the \code{image} function may be provided
 #' here.
 #' @section Methods: \describe{ \item{x = "ANY"}{Generic function: see
@@ -218,6 +234,14 @@ setMethod("image", signature(x="afni"),
 #' @param bg is the background color in the \code{par} function.
 #' @param NA.x Set any values of 0 in \code{x} to \code{NA}
 #' @param NA.y Set any values of 0 in \code{y} to \code{NA} 
+#' @param xaxt A character which specifies the x axis type. `"n"` means none.
+#' See [graphics::par()]
+#' @param yaxt A character which specifies the y axis type. `"n"` means none.
+#' See [graphics::par()]
+#' @param xaxs The style of axis interval calculation to be used for the x-axis.
+#' See [graphics::par()]
+#' @param yaxs The style of axis interval calculation to be used for the y-axis.
+#' See [graphics::par()]
 #' @param \dots other arguments to the \code{image} function may be provided
 #' here.
 #' @section Methods: 
@@ -238,7 +262,11 @@ overlay.nifti <- function(x, y, z=1, w=1, col.x=gray(0:64/64),
                           xlab="", ylab="", axes=FALSE, oma=rep(0,4),
                           mar=rep(0,4), bg="black",
                           NA.x = FALSE,
-                          NA.y = FALSE,                          
+                          NA.y = FALSE,      
+                          xaxt = "n",
+                          yaxt = "n", 
+                          xaxs = "r",
+                          yaxs = "r",
                           ...) {
   switch(plane[1],
          "axial" = {
@@ -337,7 +365,9 @@ overlay.nifti <- function(x, y, z=1, w=1, col.x=gray(0:64/64),
     stop("slice \"z\" out of range")
   }
   oldpar <- par(no.readonly=TRUE)
-  par(mfrow=ceiling(rep(sqrt(lz),2)), oma=oma, mar=mar, bg=bg)
+  par(
+    mfrow=ceiling(rep(sqrt(lz),2)), oma=oma, mar=mar, bg=bg
+  )
   if (ndim == 2) {
     x = array(x, dim = c(dim(x), 1))
     z = 1
@@ -349,9 +379,16 @@ overlay.nifti <- function(x, y, z=1, w=1, col.x=gray(0:64/64),
     for (z in index) {
       graphics::image(1:X, 1:Y, x[,,z], col=col.x, breaks=breaks.x,
                       zlim=zlim.x, asp=aspect, axes=axes, xlab=xlab,
-                      ylab=ylab, ...)
+                      ylab=ylab,
+                      xaxt = xaxt, yaxt = yaxt,
+                      xaxs = xaxs, yaxs = yaxs,
+                      ...)
       if (!missing(y)) {
-        graphics::image(1:X, 1:Y, y[,,z], col=col.y, zlim=zlim.y, add=TRUE)
+        graphics::image(1:X, 1:Y, y[,,z], col=col.y, zlim=zlim.y, add=TRUE,
+                        axes = axes, 
+                        xaxt = xaxt, yaxt = yaxt,
+                        xaxs = xaxs, yaxs = yaxs,
+                        ...)
       }
     }
   } else { # four-dimensional array
@@ -361,9 +398,16 @@ overlay.nifti <- function(x, y, z=1, w=1, col.x=gray(0:64/64),
     for (z in index) {
       graphics::image(1:X, 1:Y, x[,,z,w], col=col.x, breaks=breaks.x,
                       zlim=zlim.x, asp=aspect, axes=axes, xlab=xlab,
-                      ylab=ylab, ...)
+                      ylab=ylab, 
+                      xaxt = xaxt, yaxt = yaxt,
+                      xaxs = xaxs, yaxs = yaxs,
+                      ...)
       if (!missing(y)) {
-        graphics::image(1:X, 1:Y, y[,,z], col=col.y, zlim=zlim.y, add=TRUE)
+        graphics::image(1:X, 1:Y, y[,,z], col=col.y, zlim=zlim.y, add=TRUE,
+                        axes = axes, 
+                        xaxt = xaxt, yaxt = yaxt,
+                        xaxs = xaxs, yaxs = yaxs,
+                        ...)
       }
     }
   }
@@ -478,6 +522,10 @@ setMethod("overlay", signature(x="afni", y="array"),
 #' @param text.color is the color of the user-specified text (default =
 #' \dQuote{white}.
 #' @param text.cex is the size of the user-specified text (default = 2).
+#' @param xaxt A character which specifies the x axis type. `"n"` means none.
+#' See [graphics::par()]
+#' @param yaxt A character which specifies the y axis type. `"n"` means none.
+#' See [graphics::par()]
 #' @param \dots other arguments to the \code{image} function may be provided
 #' here.
 #' @section Methods: \describe{ \item{x = "afni"}{Produce orthographic display
@@ -505,7 +553,10 @@ orthographic.nifti <- function(x, y=NULL, xyz=NULL, w=1, col=gray(0:64/64),
                                xlab="", ylab="", axes=FALSE,
                                oma=rep(0,4), mar=rep(0,4), bg="black",
                                text=NULL, text.color="white",
-                               text.cex=2, ...) {
+                               text.cex=2, 
+                               xaxt = "n",
+                               yaxt = "n",
+                               ...) {
   if (! is.null(y)) {
     ## both volumes must have the same dimension
     if (! all(dim(x)[1:3] == dim(y)[1:3])) {
@@ -550,27 +601,42 @@ orthographic.nifti <- function(x, y=NULL, xyz=NULL, w=1, col=gray(0:64/64),
     ## Three-dimensional array
     graphics::image(1:X, 1:Z, x[,xyz[2],], col=col, zlim=zlim, breaks=breaks,
                     asp=x@pixdim[4]/x@pixdim[2],
-                    xlab=ylab, ylab=xlab, axes=axes, ...)
+                    xlab=ylab, ylab=xlab, axes=axes, 
+                    xaxt = xaxt, yaxt = yaxt,
+                    ...)
     if (! is.null(y)) {
-      graphics::image(1:X, 1:Z, y[,xyz[2],], col=col.y, zlim=zlim.y, add=TRUE)
+      graphics::image(1:X, 1:Z, y[,xyz[2],], col=col.y, zlim=zlim.y, add=TRUE,
+                      axes = axes,
+                      xaxt = xaxt, yaxt = yaxt,
+                      ...)
     }
     if (crosshairs) {
       abline(h=xyz[3], v=xyz[1], col=col.crosshairs)
     }
     graphics::image(1:Y, 1:Z, x[xyz[1],,], col=col, breaks=breaks,
                     asp=x@pixdim[4]/x@pixdim[3],
-                    xlab=xlab, ylab=ylab, axes=axes, ...)
+                    xlab=xlab, ylab=ylab, axes=axes, 
+                    xaxt = xaxt, yaxt = yaxt,
+                    ...)
     if (! is.null(y)) {
-      graphics::image(1:Y, 1:Z, y[xyz[1],,], col=col.y, zlim=zlim.y, add=TRUE)
+      graphics::image(1:Y, 1:Z, y[xyz[1],,], col=col.y, zlim=zlim.y, add=TRUE,
+                      axes = axes, 
+                      xaxt = xaxt, yaxt = yaxt,
+                      ...)
     }
     if (crosshairs) {
       abline(h=xyz[3], v=xyz[2], col=col.crosshairs)
     }
     graphics::image(1:X, 1:Y, x[,,xyz[3]], col=col, breaks=breaks,
                     asp=x@pixdim[3]/x@pixdim[2],
-                    xlab=xlab, ylab=ylab, axes=axes, ...)
+                    xlab=xlab, ylab=ylab, axes=axes, 
+                    xaxt = xaxt, yaxt = yaxt,
+                    ...)
     if (! is.null(y)) {
-      graphics::image(1:X, 1:Y, y[,,xyz[3]], col=col.y, zlim=zlim.y, add=TRUE)
+      graphics::image(1:X, 1:Y, y[,,xyz[3]], col=col.y, zlim=zlim.y, add=TRUE,
+                      axes = axes, 
+                      xaxt = xaxt, yaxt = yaxt,
+                      ...)
     }
     if (crosshairs) {
       abline(h=xyz[2], v=xyz[1], col=col.crosshairs)
@@ -582,27 +648,42 @@ orthographic.nifti <- function(x, y=NULL, xyz=NULL, w=1, col=gray(0:64/64),
     }
     graphics::image(1:X, 1:Z, x[,xyz[2],,w], col=col, breaks=breaks,
                     asp=x@pixdim[4]/x@pixdim[2],
-                    xlab=ylab, ylab=xlab, axes=axes, ...)
+                    xlab=ylab, ylab=xlab, axes=axes, 
+                    xaxt = xaxt, yaxt = yaxt,
+                    ...)
     if (! is.null(y)) {
-      graphics::image(1:X, 1:Z, y[,xyz[2],], col=col.y, zlim=zlim.y, add=TRUE)
+      graphics::image(1:X, 1:Z, y[,xyz[2],], col=col.y, zlim=zlim.y, add=TRUE,
+                      axes = axes, 
+                      xaxt = xaxt, yaxt = yaxt,
+                      ...)
     }
     if (crosshairs) {
       abline(h=xyz[3], v=xyz[1], col=col.crosshairs)
     }
     graphics::image(1:Y, 1:Z, x[xyz[1],,,w], col=col, breaks=breaks,
                     asp=x@pixdim[4]/x@pixdim[3],
-                    xlab=xlab, ylab=ylab, axes=axes, ...)
+                    xlab=xlab, ylab=ylab, axes=axes, 
+                    xaxt = xaxt, yaxt = yaxt,
+                    ...)
     if (! is.null(y)) {
-      graphics::image(1:Y, 1:Z, y[xyz[1],,], col=col.y, zlim=zlim.y, add=TRUE)
+      graphics::image(1:Y, 1:Z, y[xyz[1],,], col=col.y, zlim=zlim.y, add=TRUE,
+                      axes = axes, 
+                      xaxt = xaxt, yaxt = yaxt,
+                      ...)
     }
     if (crosshairs) {
       abline(h=xyz[3], v=xyz[2], col=col.crosshairs)
     }
     graphics::image(1:X, 1:Y, x[,,xyz[3],w], col=col, breaks=breaks,
                     asp=x@pixdim[3]/x@pixdim[2],
-                    xlab=xlab, ylab=ylab, axes=axes, ...)
+                    xlab=xlab, ylab=ylab, axes=axes, 
+                    xaxt = xaxt, yaxt = yaxt,
+                    ...)
     if (! is.null(y)) {
-      graphics::image(1:X, 1:Y, y[,,xyz[3]], col=col.y, zlim=zlim.y, add=TRUE)
+      graphics::image(1:X, 1:Y, y[,,xyz[3]], col=col.y, zlim=zlim.y, add=TRUE,
+                      axes = axes, 
+                      xaxt = xaxt, yaxt = yaxt,
+                      ...)
     }
     if (crosshairs) {
       abline(h=xyz[2], v=xyz[1], col=col.crosshairs)
@@ -611,7 +692,8 @@ orthographic.nifti <- function(x, y=NULL, xyz=NULL, w=1, col=gray(0:64/64),
   if (! is.null(text)) {
     ## Add user-supplied text to the "fourth" plot
     graphics::image(1:64, 1:64, matrix(NA, 64, 64), xlab="", ylab="",
-                    axes=FALSE)
+                    axes=FALSE,
+                    xaxt = xaxt, yaxt = yaxt)
     text(32, 32, text, col=text.color, cex=text.cex)
   }
   par(oldpar)

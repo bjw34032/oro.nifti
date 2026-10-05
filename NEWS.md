@@ -1,3 +1,7 @@
+# oro.nifti 0.11.4
+
+* Ensured `axes` passes through for `overlay`, `orthographic`, and `image` functions.
+
 # oro.nifti 0.11.3
 
 * Fixed a **different** length 1 logical condition in `image` issue that affected `neurobase` when plotting.
